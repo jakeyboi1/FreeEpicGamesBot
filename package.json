@@ -1,13 +1,13 @@
 {
-  "name": "discord-bot-boilerplate",
-  "version": "2.0.0",
-  "description": "Node.js Discord bot boilerplate",
-  "author": "AndrewR3K <Bytesizd>",
+  "name": "jakes-free-games-bot",
+  "version": "1.0.0",
+  "description": "A discord bot that post a message to any channel named 'epic-games-alerts' when Epic Games releases new free games of the week!",
+  "author": "Jake2k4",
   "scripts": {
     "dev": "nodemon -r dotenv/config --exec babel-node -- ./src/index.js",
     "clean": "rm -rf dist && mkdir dist",
     "build": "babel src -d dist ",
-    "serve": "babel-node dist/index.js",
+    "serve": "babel-node -r dotenv/config dist/index.j",
     "start": "yarn clean && yarn build && yarn serve",
     "deploy:single": "cross-env DEPLOY_TYPE=single node -r dotenv/config deployment/deploy-commands.js",
     "deploy:global": "cross-env DEPLOY_TYPE=global node -r dotenv/config deployment/deploy-commands.js"
