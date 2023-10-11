@@ -1,4 +1,4 @@
-import { Events } from 'discord.js'
+import { Events, ActivityType } from 'discord.js'
 import Logger from '../utils/logger'
 import EpicGamesSchedule from '../schedule/epicgamesschedule'
 
