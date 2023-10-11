@@ -13,6 +13,7 @@
 * Discord JS Slash Commands
 
 ## Installation
+- Use gitbash not terminal
 
 ```bash
 $ yarn install

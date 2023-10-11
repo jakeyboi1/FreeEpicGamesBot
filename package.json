@@ -1,6 +1,6 @@
 {
   "name": "jakes-free-games-bot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A discord bot that post a message to any channel named 'epic-games-alerts' when Epic Games releases new free games of the week!",
   "author": "Jake2k4",
   "scripts": {
@@ -10,12 +10,14 @@
     "serve": "babel-node -r dotenv/config dist/index.js",
     "start": "yarn clean && yarn build && yarn serve",
     "deploy:single": "cross-env DEPLOY_TYPE=single node -r dotenv/config deployment/deploy-commands.js",
-    "deploy:global": "cross-env DEPLOY_TYPE=global node -r dotenv/config deployment/deploy-commands.js"
+    "deploy:global": "cross-env DEPLOY_TYPE=global babel-node -r dotenv/config deployment/deploy-commands.js"
   },
   "dependencies": {
     "axios": "^1.5.1",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.6.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {

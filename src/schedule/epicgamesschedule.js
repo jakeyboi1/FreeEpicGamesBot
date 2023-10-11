@@ -2,11 +2,14 @@ import axios from 'axios'
 import { EmbedBuilder  } from'discord.js'
 import _ from 'lodash'
 import fs from "fs";
+import freeGamesController from '../database/controllers/FreeGamesController';
 
 class EpicGamesSchedule {
   constructor() {
     this.start = this.start.bind(this)
     this.checkForFreeGames = this.checkForFreeGames.bind(this)
+    this.database = new freeGamesController()
+    this.print = console.log
 
     this.config = {
         method: 'get',
@@ -47,12 +50,13 @@ class EpicGamesSchedule {
         let epicGamesData = []
         let epicGamesURL = []
         let currentGamesData = []
-        if (!fs.existsSync(this.directory)) {
-            fs.writeFileSync(this.directory, '{ "games": [] }');
+        let games = await this.database.getLatestFreeGames()
+        if (games.length == 0) {
+            currentGamesData = []
         } else {
-            let { games } = JSON.parse(fs.readFileSync(this.directory))
-            currentGamesData = games
+            currentGamesData = games[0].games
         }
+
 
         // I was going to get fancy and do a spread concat, but this is more viable for what we want here. (to know what object is new)
         let index = 0
@@ -86,7 +90,7 @@ class EpicGamesSchedule {
                 }
             })
             console.log(epicGamesData)
-            fs.writeFileSync(this.directory, JSON.stringify({ games: epicGamesData}))
+            this.database.setLatestGames({ games: epicGamesData })
         }
     }
 }

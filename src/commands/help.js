@@ -13,11 +13,10 @@ module.exports = {
         .addFields(
             { name: 'Manufacturer', value: pckg.author || 'not found', inline: true },
             { name: 'Version', value: pckg.version || 'not found', inline: true },
-            { name: '\u200B', value: '\u200B' },
-            { name: 'Made in', value: 'USA with :heart: and :coffee:'}
+            { name: '\u200B', value: '\u200B' }
         )
         
         
-		await interaction.reply({ embeds: [ embed ] });
+		await interaction.reply({ embeds: [ embed ], ephemeral: true });
 	},
 };
