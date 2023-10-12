@@ -48,7 +48,6 @@ class EpicGamesSchedule {
 
         // Check if file exists already, if not lets create one, otherwise use the file
         let epicGamesData = []
-        let epicGamesURL = []
         let currentGamesData = []
         let games = await this.database.getLatestFreeGames()
         if (games.length == 0) {
@@ -62,19 +61,24 @@ class EpicGamesSchedule {
         let index = 0
         let length = filteredElements.length
         let newFreeGamesBool = false
+        let gameString = ""
         for (index; index < length; index++) {
             let filteredElement = filteredElements[index]
             if (currentGamesData.findIndex((game) => game === filteredElement.title) < 0) {
+                //Sorting the proper url only changing off of product url if its a bundle
+                let url = `<https://store.epicgames.com/en-US/p/${filteredElement.urlSlug}>`
+                for (let key in filteredElement.categories) {
+                    console.log(filteredElement.categories[key].path)
+                    if (filteredElement.categories[key].path == "bundles") {
+                        url = `<https://store.epicgames.com/en-US/bundles/${filteredElement.urlSlug}>`
+                    }
+                }
+                gameString = gameString + `- Name: ${filteredElement.title}\nLink: ${url}\n`
                 newFreeGamesBool = true
                 epicGamesData.push(filteredElement.title)
-                epicGamesURL.push(filteredElement.catalogNs.mappings[0].pageSlug)
             }
         }
         if (newFreeGamesBool) {
-            let gameString = ``
-            for (let key in epicGamesData) {
-                gameString = gameString + `- Name: ${epicGamesData[key]}\nLink: <https://store.epicgames.com/en-US/p/${epicGamesURL[key]}>\n`
-            }
             const embed = new EmbedBuilder()
             .setColor(5763719)
             .setTitle('NEW FREE GAMES!')
