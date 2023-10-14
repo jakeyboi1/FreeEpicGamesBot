@@ -1,7 +1,7 @@
 {
   "name": "jakes-free-games-bot",
   "version": "1.0.1",
-  "description": "A discord bot that post a message to any channel named 'epic-games-alerts' when Epic Games releases new free games of the week!",
+  "description": "A discord bot that alerts when Epic Games releases new free games of the week!",
   "author": "Jake2k4",
   "scripts": {
     "dev": "nodemon -r dotenv/config --exec babel-node -- ./src/index.js",

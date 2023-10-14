@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { EmbedBuilder  } from'discord.js'
 import _ from 'lodash'
-import fs from "fs";
 import freeGamesController from '../database/controllers/FreeGamesController';
+import serverOptionsController from '../database/controllers/ServerOptionsController';
 
 class EpicGamesSchedule {
   constructor() {
@@ -10,6 +10,7 @@ class EpicGamesSchedule {
     this.checkForFreeGames = this.checkForFreeGames.bind(this)
     this.database = new freeGamesController()
     this.print = console.log
+    this.serverOptionsController = new serverOptionsController()
 
     this.config = {
         method: 'get',
@@ -68,7 +69,6 @@ class EpicGamesSchedule {
                 //Sorting the proper url only changing off of product url if its a bundle
                 let url = `<https://store.epicgames.com/en-US/p/${filteredElement.urlSlug}>`
                 for (let key in filteredElement.categories) {
-                    console.log(filteredElement.categories[key].path)
                     if (filteredElement.categories[key].path == "bundles") {
                         url = `<https://store.epicgames.com/en-US/bundles/${filteredElement.urlSlug}>`
                     }
@@ -87,10 +87,15 @@ class EpicGamesSchedule {
             .setTimestamp()
             //This alerts a specific channel, you can change this to alert wherever you want.
             let allChannels = client.channels.cache
+            let allStoredGuildOptions = await this.serverOptionsController.getOptions() //getting all db options
             allChannels.forEach(channel => {
-                if (channel.name === "epic-games-alerts") {
-                    channel.send({embeds: [embed]})
-                    channel.send("@everyone")
+                if (allStoredGuildOptions != false) {
+                    for (let key in allStoredGuildOptions) {
+                        if (channel.guildId == allStoredGuildOptions[key].guildId && channel.id == allStoredGuildOptions[key].alertChannel) { //making sure its the right channel
+                            channel.send({embeds: [embed]})
+                            channel.send("@everyone")
+                        }
+                    }
                 }
             })
             console.log(epicGamesData)

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const db = process.env.MONGO_CONNECTION_STRING
+const db = process.env.MONGO_CONNECTION_STRING_games
 
 const freeGamesConn = mongoose.createConnection(db)
 
