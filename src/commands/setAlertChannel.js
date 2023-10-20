@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+import { PermissionFlagsBits, PermissionsBitField } from 'discord.js';
 import serverOptionsController from '../database/controllers/ServerOptionsController';
 // Docs for Embeds: https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
 
@@ -13,10 +14,17 @@ module.exports = {
             alertChannel: interaction.channelId
         })
         if (retval) {
-            await interaction.reply({
-                content: "Alert channel set, alerts will now be sent in this channel!",
-                ephemeral: true
-            })
+            if (interaction.member.permissionsIn(interaction.channel).has(PermissionsBitField.Flags.Administrator)) {
+                await interaction.reply({
+                    content: "Alert channel set, alerts will now be sent in this channel!",
+                    ephemeral: true
+                })
+            } else {
+                await interaction.reply({
+                    content: "Not admin command failed",
+                    ephemeral: true
+                })
+            }
         }
 	},
 };

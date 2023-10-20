@@ -11,7 +11,7 @@ module.exports = {
         .setTitle('Bot Info')
         .setDescription(pckg.description || 'Beep Bo0P')
         .addFields(
-            { name: 'Enable Alerts', value: "/setalertchannel to enable alerts in a channel", inline: true },
+            { name: 'Enable Alerts', value: "/setalertchannel to enable alerts in a channel(alerts will be sent to whatever channel this command is used in)", inline: true },
             { name: 'Manufacturer', value: pckg.author || 'not found', inline: true },
             { name: 'Version', value: pckg.version || 'not found', inline: true },
             { name: '\u200B', value: '\u200B' }
